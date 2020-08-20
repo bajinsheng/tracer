@@ -31,7 +31,7 @@ class QEMURunner:
     """
 
     def __init__(
-        self, binary=None, input=None, project=None, record_trace=True, record_stdout=False,
+        self, binary=None, input=b"", project=None, record_trace=True, record_stdout=False,
         record_magic=True, record_core=False, seed=None, memory_limit="8G", bitflip=False, report_bad_args=False,
         use_tiny_core=False, max_size=None, qemu=None, argv=None, library_path=None, ld_linux=None,
         trace_log_limit=2**30, trace_timeout=10, exec_func=None
@@ -84,6 +84,8 @@ class QEMURunner:
         self._record_trace = record_trace
         self._record_core = record_core
 
+        if argv and type(argv) != list:
+            raise ValueError("Argv must be list.")
         self.argv = argv
 
         # Basic block trace.
@@ -358,7 +360,7 @@ class QEMURunner:
         if 'cgc' in self._trace_source_path:
             qemu_args += ["-m", self._memory_limit]
 
-        program_args = self.argv or [self._filename]
+        program_args = [self._filename] + self.argv
         do_pov = type(self.input) is not bytes
 
         if do_pov:
