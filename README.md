@@ -6,10 +6,19 @@ Now, there are still deprecated compatibility layers for this functionality, but
 The only one currently available is based on qemu-user - `tracer.QEMURunner`.
 It relies on some special builds of qemu we've hacked to actually output these traces without the normal problems you sometimes see from qemu's traces with respect to basic block consolidation and optimization.
 
-# Installation
+# QEMU Installation
 If you have QEMU compilation problems, installing these packages may be useful (tested on Ubuntu 14.04 64bit):
 
     apt-get build-dep qemu-system
     apt-get install libacl1-dev
 
+# PIP installation
+Add this command into a file called requirement.txt:
+  
+    git+https://github.com/bajinsheng/tracer.git#egg=tracer
 
+Run:
+
+    pip3 install -r requirement.txt
+
+Don't need to clone this repositoy.
